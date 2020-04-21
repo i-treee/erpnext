@@ -312,6 +312,7 @@
    "columns": 3,
    "fieldname": "rate",
    "fieldtype": "Currency",
+   "in_list_view": 1,
    "label": "Rate",
    "oldfieldname": "import_rate",
    "oldfieldtype": "Currency",
@@ -796,8 +797,7 @@
   {
    "fieldname": "manufacturer_part_no",
    "fieldtype": "Data",
-   "label": "Manufacturer Part Number",
-   "read_only": 1
+   "label": "Manufacturer Part Number"
   },
   {
    "bold": 1,
@@ -821,8 +821,9 @@
  ],
  "idx": 1,
  "istable": 1,
- "modified": "2020-04-02 04:31:57.586244",
- "modified_by": "admin@copel.co.th",
+ "links": [],
+ "modified": "2020-04-07 18:38:21.141558",
+ "modified_by": "Administrator",
  "module": "Stock",
  "name": "Purchase Receipt Item",
  "owner": "Administrator",
