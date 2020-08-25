@@ -126,6 +126,8 @@ class Asset(AccountsController):
 			frappe.throw(_("Available-for-use Date should be after purchase date"))
 	
 	def validate_gross_and_purchase_amount(self):
+		if self.is_existing_asset: return
+		
 		if self.gross_purchase_amount and self.gross_purchase_amount != self.purchase_receipt_amount:
 			frappe.throw(_("Gross Purchase Amount should be {} to purchase amount of one single Asset. {}\
 				Please do not book expense of multiple assets against one single Asset.")
@@ -405,6 +407,8 @@ class Asset(AccountsController):
 					row.expected_value_after_useful_life = asset_value_after_full_schedule
 
 	def validate_cancellation(self):
+		if self.status in ("In Maintenance", "Out of Order"):
+			frappe.throw(_("There are active maintenance or repairs against the asset. You must complete all of them before cancelling the asset."))
 		if self.status not in ("Submitted", "Partially Depreciated", "Fully Depreciated"):
 			frappe.throw(_("Asset cannot be cancelled, as it is already {0}").format(self.status))
 
