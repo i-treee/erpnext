@@ -1,5 +1,4 @@
 {
- "actions": [],
  "allow_events_in_timeline": 1,
  "allow_import": 1,
  "allow_rename": 1,
@@ -15,6 +14,8 @@
   "salutation",
   "customer_name",
   "gender",
+  "parent_name",
+  "date_of_birth",
   "customer_type",
   "default_bank_account",
   "lead_name",
@@ -83,7 +84,7 @@
    "fieldtype": "Select",
    "label": "Series",
    "no_copy": 1,
-   "options": "CUST-.YYYY.-",
+   "options": "0.YYYY..####",
    "set_only_once": 1
   },
   {
@@ -98,7 +99,7 @@
    "fieldname": "customer_name",
    "fieldtype": "Data",
    "in_global_search": 1,
-   "label": "Full Name",
+   "label": "Child Name",
    "no_copy": 1,
    "oldfieldname": "customer_name",
    "oldfieldtype": "Data",
@@ -110,17 +111,17 @@
    "fieldname": "gender",
    "fieldtype": "Link",
    "label": "Gender",
-   "options": "Gender"
+   "options": "Gender",
+   "reqd": 1
   },
   {
-   "default": "Company",
+   "default": "Individual",
    "fieldname": "customer_type",
    "fieldtype": "Select",
    "label": "Type",
    "oldfieldname": "customer_type",
    "oldfieldtype": "Select",
-   "options": "Company\nIndividual",
-   "reqd": 1
+   "options": "Company\nIndividual"
   },
   {
    "fieldname": "default_bank_account",
@@ -178,8 +179,7 @@
    "oldfieldname": "territory",
    "oldfieldtype": "Link",
    "options": "Territory",
-   "print_hide": 1,
-   "reqd": 1
+   "print_hide": 1
   },
   {
    "fieldname": "tax_id",
@@ -480,14 +480,25 @@
    "fieldname": "dn_required",
    "fieldtype": "Check",
    "label": "Allow Sales Invoice Creation Without Delivery Note"
+  },
+  {
+   "fieldname": "parent_name",
+   "fieldtype": "Data",
+   "label": "Parent Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "date_of_birth",
+   "fieldtype": "Date",
+   "label": "Date of Birth",
+   "reqd": 1
   }
  ],
  "icon": "fa fa-user",
  "idx": 363,
  "image_field": "image",
- "links": [],
- "modified": "2020-03-17 11:03:42.706907",
- "modified_by": "Administrator",
+ "modified": "2020-08-31 06:10:14.597041",
+ "modified_by": "admin@copel.co.th",
  "module": "Selling",
  "name": "Customer",
  "name_case": "Title Case",
