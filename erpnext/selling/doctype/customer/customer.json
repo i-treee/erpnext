@@ -83,6 +83,7 @@
   {
    "fieldname": "naming_series",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Series",
    "no_copy": 1,
    "options": "0.YYYY..####",
@@ -504,7 +505,7 @@
  "icon": "fa fa-user",
  "idx": 363,
  "image_field": "image",
- "modified": "2020-08-31 06:25:43.607650",
+ "modified": "2020-08-31 06:30:30.206254",
  "modified_by": "admin@copel.co.th",
  "module": "Selling",
  "name": "Customer",
