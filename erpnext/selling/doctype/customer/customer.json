@@ -181,7 +181,8 @@
    "oldfieldname": "territory",
    "oldfieldtype": "Link",
    "options": "Territory",
-   "print_hide": 1
+   "print_hide": 1,
+   "reqd": 1
   },
   {
    "fieldname": "tax_id",
@@ -505,7 +506,7 @@
  "icon": "fa fa-user",
  "idx": 363,
  "image_field": "image",
- "modified": "2020-08-31 16:07:59.928355",
+ "modified": "2020-08-31 20:48:22.409178",
  "modified_by": "admin@copel.co.th",
  "module": "Selling",
  "name": "Customer",
