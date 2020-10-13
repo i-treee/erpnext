@@ -41,19 +41,24 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 
 	items_data = frappe.db.sql("""
 		SELECT
-			name AS item_code,
-			item_name,
-			stock_uom,
-			image AS item_image,
-			idx AS idx,
-			is_stock_item
+			tabItem.name AS item_code,
+			tabItem.variant_of,
+			tabItem.item_name,
+			tabItem.stock_uom,
+			IF(tabItem.image IS NULL, tabItemTemplate.image, tabItem.image) AS item_image,
+			tabItem.idx AS idx,
+			tabItem.is_stock_item
 		FROM
-			`tabItem`
+			`tabItem` as tabItem
+		LEFT OUTER JOIN
+			`tabItem` as tabItemTemplate
+		ON
+			tabItem.variant_of = tabItemTemplate.name
 		WHERE
-			disabled = 0
-				AND has_variants = 0
-				AND is_sales_item = 1
-				AND item_group in (SELECT name FROM `tabItem Group` WHERE lft >= {lft} AND rgt <= {rgt})
+			tabItem.disabled = 0
+				AND tabItem.has_variants = 0
+				AND tabItem.is_sales_item = 1
+				AND tabItem.item_group in (SELECT name FROM `tabItem Group` WHERE lft >= {lft} AND rgt <= {rgt})
 				AND {condition}
 		ORDER BY
 			idx desc
@@ -69,9 +74,10 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 
 	if items_data:
 		items = [d.item_code for d in items_data]
+		items_with_templates = items + [d.variant_of for d in items_data]
 		item_prices_data = frappe.get_all("Item Price",
 			fields = ["item_code", "price_list_rate", "currency"],
-			filters = {'price_list': price_list, 'item_code': ['in', items]})
+			filters = {'price_list': price_list, 'item_code': ['in', items_with_templates]})
 
 		item_prices, bin_data = {}, {}
 		for d in item_prices_data:
@@ -97,7 +103,7 @@ def get_items(start, page_length, price_list, item_group, search_value="", pos_p
 
 		for item in items_data:
 			item_code = item.item_code
-			item_price = item_prices.get(item_code) or {}
+			item_price = item_prices.get(item_code) or item_prices.get(item.variant_of) or {}
 			item_stock_qty = bin_dict.get(item_code)
 
 			if display_items_in_stock and not item_stock_qty:
@@ -154,16 +160,16 @@ def search_serial_or_batch_or_barcode_number(search_value):
 
 def get_conditions(item_code, serial_no, batch_no, barcode):
 	if serial_no or batch_no or barcode:
-		return "name = {0}".format(frappe.db.escape(item_code))
+		return "tabItem.name = {0}".format(frappe.db.escape(item_code))
 
-	return """(name like {item_code}
-		or item_name like {item_code})""".format(item_code = frappe.db.escape('%' + item_code + '%'))
+	return """(tabItem.name like {item_code}
+		or tabItem.item_name like {item_code})""".format(item_code = frappe.db.escape('%' + item_code + '%'))
 
 def get_item_group_condition(pos_profile):
 	cond = "and 1=1"
 	item_groups = get_item_groups(pos_profile)
 	if item_groups:
-		cond = "and item_group in (%s)"%(', '.join(['%s']*len(item_groups)))
+		cond = "and tabItem.item_group in (%s)"%(', '.join(['%s']*len(item_groups)))
 
 	return cond % tuple(item_groups)
 
