@@ -105,6 +105,7 @@
    "no_copy": 1,
    "oldfieldname": "customer_name",
    "oldfieldtype": "Data",
+   "reqd": 1,
    "search_index": 1
   },
   {
@@ -169,6 +170,7 @@
    "oldfieldname": "customer_group",
    "oldfieldtype": "Link",
    "options": "Customer Group",
+   "reqd": 1,
    "search_index": 1
   },
   {
@@ -311,7 +313,7 @@
    "fetch_from": "customer_primary_contact.email_id",
    "fieldname": "email_id",
    "fieldtype": "Read Only",
-   "label": "Email Id"
+   "label": "Email Address"
   },
   {
    "fieldname": "column_break_26",
@@ -490,7 +492,8 @@
   {
    "fieldname": "date_of_birth",
    "fieldtype": "Date",
-   "label": "Date of Birth"
+   "label": "Date of Birth",
+   "reqd": 1
   },
   {
    "fieldname": "nickname",
@@ -502,7 +505,7 @@
  "icon": "fa fa-user",
  "idx": 363,
  "image_field": "image",
- "modified": "2020-10-03 05:43:10.443340",
+ "modified": "2020-10-14 05:42:58.584905",
  "modified_by": "admin@copel.co.th",
  "module": "Selling",
  "name": "Customer",
